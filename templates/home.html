@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- Hero Section -->
+<div class="hero-section text-center">
+    <div class="container py-5">
+        <h1 class="hero-title mb-3">AI-Enhanced Intrusion Detection System</h1>
+        <p class="lead mb-4 text-white-50">Real-time network threat detection powered by Machine Learning</p>
+        <div class="d-flex justify-content-center gap-3">
+            <a href="/predict" class="btn btn-danger btn-lg px-4 py-2" style="background-color: var(--accent-pink); border: none;">
+                <i class="bi bi-activity me-2"></i>Analyze Traffic
+            </a>
+            <a href="/dashboard" class="btn btn-outline-light btn-lg px-4 py-2">
+                <i class="bi bi-speedometer2 me-2"></i>View Dashboard
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- Key Features Section -->
+<div class="container my-5 py-3">
+    <h2 class="text-center mb-5 fw-bold">Key Features</h2>
+    <div class="row g-4">
+        <div class="col-md-3">
+            <div class="card h-100 feature-card p-4">
+                <div class="feature-icon-wrapper bg-primary bg-opacity-10 text-primary">
+                    <i class="bi bi-cpu"></i>
+                </div>
+                <h5 class="fw-bold">ML-Powered Detection</h5>
+                <p class="text-muted small">Random Forest classifier trained on balanced network intrusion datasets for accurate threat detection.</p>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card h-100 feature-card p-4">
+                <div class="feature-icon-wrapper bg-warning bg-opacity-10 text-warning">
+                    <i class="bi bi-lightning-charge"></i>
+                </div>
+                <h5 class="fw-bold">Real-Time Analysis</h5>
+                <p class="text-muted small">Analyze network packet metrics instantly and get accurate threat classification results.</p>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card h-100 feature-card p-4">
+                <div class="feature-icon-wrapper bg-info bg-opacity-10 text-info">
+                    <i class="bi bi-graph-up"></i>
+                </div>
+                <h5 class="fw-bold">Live Dashboard</h5>
+                <p class="text-muted small">Visualize alerts and attack category statistics with a modern, dynamic analytics interface.</p>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card h-100 feature-card p-4">
+                <div class="feature-icon-wrapper bg-success bg-opacity-10 text-success">
+                    <i class="bi bi-journal-text"></i>
+                </div>
+                <h5 class="fw-bold">Alert Logging</h5>
+                <p class="text-muted small">All classification attempts are logged in detail, capturing exact metrics, timestamps, and model confidence scores.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Detectable Attack Types Section -->
+<div class="container mb-5 py-3">
+    <h2 class="text-center mb-5 fw-bold">Detectable Attack Types</h2>
+    <div class="row g-3">
+        <div class="col-md">
+            <div class="card attack-badge-card bg-dos">
+                <i class="bi bi-radioactive fs-3 mb-2"></i>
+                <div>DoS</div>
+                <div class="fw-light small mt-1">Denial of Service</div>
+            </div>
+        </div>
+        <div class="col-md">
+            <div class="card attack-badge-card bg-probe">
+                <i class="bi bi-search fs-3 mb-2"></i>
+                <div>Probe</div>
+                <div class="fw-light small mt-1">Port Scanning</div>
+            </div>
+        </div>
+        <div class="col-md">
+            <div class="card attack-badge-card bg-r2l">
+                <i class="bi bi-unlock fs-3 mb-2"></i>
+                <div>R2L</div>
+                <div class="fw-light small mt-1">Remote to Local</div>
+            </div>
+        </div>
+        <div class="col-md">
+            <div class="card attack-badge-card bg-u2r">
+                <i class="bi bi-shield-slash fs-3 mb-2"></i>
+                <div>U2R</div>
+                <div class="fw-light small mt-1">User to Root</div>
+            </div>
+        </div>
+        <div class="col-md">
+            <div class="card attack-badge-card bg-normal">
+                <i class="bi bi-check-circle fs-3 mb-2"></i>
+                <div>Normal</div>
+                <div class="fw-light small mt-1">Safe Traffic</div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

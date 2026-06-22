@@ -1,0 +1,166 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row mb-4 align-items-center">
+        <div class="col">
+            <h2 class="fw-bold"><i class="bi bi-search me-2 text-primary"></i>Network Traffic Prediction</h2>
+            <p class="text-muted">Enter network connection features to classify as Normal or Intrusion.</p>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <!-- Input Form Column -->
+        <div class="col-lg-7">
+            <div class="card border-0 shadow-sm p-4">
+                <h5 class="fw-bold mb-4 border-bottom pb-2">Network Connection Features</h5>
+                <form id="predictionForm" method="POST" action="/predict">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label for="flow_duration" class="form-label fw-semibold text-secondary small">Duration (seconds)</label>
+                            <input type="number" step="any" class="form-control bg-light border-0" id="flow_duration" name="flow_duration" required placeholder="e.g. 76978">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="total_length_fwd_packets" class="form-label fw-semibold text-secondary small">Source Bytes</label>
+                            <input type="number" step="any" class="form-control bg-light border-0" id="total_length_fwd_packets" name="total_length_fwd_packets" required placeholder="e.g. 78">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="total_fwd_packets" class="form-label fw-semibold text-secondary small">Total Fwd Packets</label>
+                            <input type="number" step="any" class="form-control bg-light border-0" id="total_fwd_packets" name="total_fwd_packets" required placeholder="e.g. 2">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="total_backward_packets" class="form-label fw-semibold text-secondary small">Total Backward Packets</label>
+                            <input type="number" step="any" class="form-control bg-light border-0" id="total_backward_packets" name="total_backward_packets" required placeholder="e.g. 2">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="destination_bytes" class="form-label fw-semibold text-secondary small">Destination Bytes (Decorative)</label>
+                            <input type="number" step="any" class="form-control bg-light border-0" id="destination_bytes" name="destination_bytes" value="0">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="land" class="form-label fw-semibold text-secondary small">Land (0/1) (Decorative)</label>
+                            <select class="form-select bg-light border-0" id="land" name="land">
+                                <option value="0">0 - Different Host</option>
+                                <option value="1">1 - Same Host</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="wrong_fragments" class="form-label fw-semibold text-secondary small">Wrong Fragments (Decorative)</label>
+                            <input type="number" step="any" class="form-control bg-light border-0" id="wrong_fragments" name="wrong_fragments" value="0">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="urgent_packets" class="form-label fw-semibold text-secondary small">Urgent Packets (Decorative)</label>
+                            <input type="number" step="any" class="form-control bg-light border-0" id="urgent_packets" name="urgent_packets" value="0">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="hot_indicators" class="form-label fw-semibold text-secondary small">Hot Indicators (Decorative)</label>
+                            <input type="number" step="any" class="form-control bg-light border-0" id="hot_indicators" name="hot_indicators" value="0">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="failed_logins" class="form-label fw-semibold text-secondary small">Failed Login Attempts (Decorative)</label>
+                            <input type="number" step="any" class="form-control bg-light border-0" id="failed_logins" name="failed_logins" value="0">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-danger w-100 mt-4 py-2 fw-bold" style="background-color: var(--accent-pink); border: none;">
+                        <i class="bi bi-search me-2"></i>Analyze Traffic
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Output & Samples Column -->
+        <div class="col-lg-5">
+            <div class="row g-4">
+                <!-- Prediction Output Card -->
+                <div class="col-12">
+                    <div class="card border-0 shadow-sm p-4 text-center h-100 min-vh-25 d-flex flex-column align-items-center justify-content-center">
+                        {% if prediction %}
+                            <div class="w-100">
+                                <h5 class="fw-bold mb-4 text-start border-bottom pb-2">Analysis Result</h5>
+                                
+                                {% if "Normal" in prediction or "BENIGN" in prediction %}
+                                    <div class="alert alert-success d-inline-block py-3 px-5 rounded-pill mb-3" role="alert">
+                                        <i class="bi bi-shield-check fs-2 d-block mb-1"></i>
+                                        <span class="fs-4 fw-bold">Safe Traffic</span>
+                                    </div>
+                                    <h4 class="fw-bold text-success mt-2">{{ prediction_display }}</h4>
+                                {% else %}
+                                    <div class="alert alert-danger d-inline-block py-3 px-5 rounded-pill mb-3" role="alert">
+                                        <i class="bi bi-exclamation-triangle fs-2 d-block mb-1"></i>
+                                        <span class="fs-4 fw-bold">Intrusion Detected</span>
+                                    </div>
+                                    <h4 class="fw-bold text-danger mt-2">{{ prediction_display }}</h4>
+                                {% endif %}
+
+                                <div class="mt-4 p-3 bg-light rounded text-start">
+                                    <div class="d-flex justify-content-between mb-2">
+                                        <span class="text-secondary fw-semibold">Model confidence:</span>
+                                        <span class="fw-bold text-primary">{{ confidence }}</span>
+                                    </div>
+                                    <div class="progress" style="height: 10px;">
+                                        <div class="progress-bar {% if 'Normal' in prediction or 'BENIGN' in prediction %}bg-success{% else %}bg-danger{% endif %}" role="progressbar" style="width: {{ confidence }}"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% else %}
+                            <i class="bi bi-shield-shaded fs-1 text-secondary opacity-50 mb-3"></i>
+                            <p class="text-muted">Enter network features and click <strong>Analyze Traffic</strong> to get a prediction.</p>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- Quick Demo Samples Card -->
+                <div class="col-12">
+                    <div class="card border-0 shadow-sm p-4">
+                        <h5 class="fw-bold mb-3 border-bottom pb-2">Quick Demo Samples</h5>
+                        <div class="d-grid gap-2">
+                            <button type="button" class="btn btn-outline-danger text-start py-2" onclick="simulateAttack('dos')">
+                                <i class="bi bi-shield-slash me-2"></i>Simulate Brute Force Attack
+                            </button>
+                            <button type="button" class="btn btn-outline-success text-start py-2" onclick="simulateAttack('normal')">
+                                <i class="bi bi-shield-check me-2"></i>Simulate Normal Traffic
+                            </button>
+                            <button type="button" class="btn btn-outline-warning text-start py-2" onclick="simulateAttack('sql')">
+                                <i class="bi bi-shield-exclamation me-2"></i>Simulate SQL Injection Attack
+                            </button>
+                            <button type="button" class="btn btn-outline-info text-start py-2" onclick="simulateAttack('xss')">
+                                <i class="bi bi-shield-exclamation me-2"></i>Simulate XSS Attack
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function simulateAttack(type) {
+        const duration = document.getElementById('flow_duration');
+        const fwd_pack = document.getElementById('total_fwd_packets');
+        const bwd_pack = document.getElementById('total_backward_packets');
+        const src_byte = document.getElementById('total_length_fwd_packets');
+
+        if (type === 'normal') {
+            duration.value = 76978;
+            fwd_pack.value = 2;
+            bwd_pack.value = 2;
+            src_byte.value = 78;
+        } else if (type === 'dos') {
+            duration.value = 5185118;
+            fwd_pack.value = 7;
+            bwd_pack.value = 7;
+            src_byte.value = 1022;
+        } else if (type === 'sql') {
+            duration.value = 5006127;
+            fwd_pack.value = 4;
+            bwd_pack.value = 4;
+            src_byte.value = 447;
+        } else if (type === 'xss') {
+            duration.value = 5638432;
+            fwd_pack.value = 3;
+            bwd_pack.value = 1;
+            src_byte.value = 0;
+        }
+    }
+</script>
+{% endblock %}

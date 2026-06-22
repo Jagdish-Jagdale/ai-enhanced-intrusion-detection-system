@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row mb-4 align-items-center">
+        <div class="col">
+            <h2 class="fw-bold"><i class="bi bi-bell-fill text-warning me-2"></i>Alert Log</h2>
+            <p class="text-muted">A history of recent network scans and threat classification logs.</p>
+        </div>
+    </div>
+
+    <div class="card border-0 shadow-sm overflow-hidden">
+        <div class="card-header bg-dark text-white py-3">
+            <div class="d-flex justify-content-between align-items-center">
+                <span class="fw-bold">All Intrusion Detection Alerts ({{ alerts|length }} total)</span>
+                <span class="badge bg-danger">Real-Time Monitoring Active</span>
+            </div>
+        </div>
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover table-striped mb-0 align-middle">
+                    <thead class="table-light">
+                        <tr class="text-secondary small">
+                            <th class="ps-4">#</th>
+                            <th>TIMESTAMP</th>
+                            <th>CLASSIFICATION</th>
+                            <th>CONFIDENCE</th>
+                            <th class="pe-4">STATUS</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for alert in alerts|reverse %}
+                        <tr>
+                            <td class="ps-4 fw-bold text-muted">{{ loop.index }}</td>
+                            <td>{{ alert.timestamp }}</td>
+                            <td class="fw-bold">{{ alert.classification }}</td>
+                            <td>
+                                <div class="d-flex align-items-center gap-2">
+                                    <div class="progress flex-grow-1" style="height: 6px; min-width: 80px;">
+                                        <div class="progress-bar {% if alert.status == 'Safe' %}bg-success{% else %}bg-danger{% endif %}" role="progressbar" style="width: {{ alert.confidence }}"></div>
+                                    </div>
+                                    <span class="small fw-semibold">{{ alert.confidence }}</span>
+                                </div>
+                            </td>
+                            <td class="pe-4">
+                                {% if alert.status == 'Safe' %}
+                                    <span class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25 px-3 py-2 rounded-pill">
+                                        <i class="bi bi-shield-check me-1"></i>Safe
+                                    </span>
+                                {% else %}
+                                    <span class="badge bg-danger bg-opacity-10 text-danger border border-danger border-opacity-25 px-3 py-2 rounded-pill">
+                                        <i class="bi bi-shield-exclamation me-1"></i>Threat
+                                    </span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

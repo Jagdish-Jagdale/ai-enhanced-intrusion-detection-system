@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row mb-5">
+        <div class="col-lg-8 mx-auto text-center">
+            <h2 class="fw-bold mb-3"><i class="bi bi-info-circle text-primary me-2"></i>About the System</h2>
+            <p class="lead text-muted">A cybersecurity solution utilizing Machine Learning for real-time intrusion and anomaly detection.</p>
+            <div class="border-top w-25 mx-auto my-4 border-2 border-primary"></div>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <!-- Model Architecture -->
+        <div class="col-md-6">
+            <div class="card border-0 shadow-sm p-4 h-100">
+                <h4 class="fw-bold mb-3 text-primary"><i class="bi bi-brain me-2"></i>Random Forest Model</h4>
+                <p>The core of this system is a **Random Forest Classifier** trained using supervised machine learning on preprocessed network packet traffic records.</p>
+                <p>To overcome typical network logs class imbalances (where normal BENIGN flows vastly outnumber attack flows), the **SMOTE (Synthetic Minority Over-sampling Technique)** algorithm was applied during training to balance and generalize minority attack categories.</p>
+                <div class="alert alert-secondary border-0 mt-3">
+                    <h6 class="fw-bold mb-1"><i class="bi bi-check-circle-fill text-success me-2"></i>Current Model Performance</h6>
+                    <span class="small">Overall Accuracy: <strong>86.2%</strong> on 4 critical flow-level features.</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tech Stack -->
+        <div class="col-md-6">
+            <div class="card border-0 shadow-sm p-4 h-100">
+                <h4 class="fw-bold mb-3 text-primary"><i class="bi bi-stack me-2"></i>Technology Stack</h4>
+                <div class="row g-3 mt-1">
+                    <div class="col-6">
+                        <div class="d-flex align-items-center gap-2">
+                            <i class="bi bi-check2-circle text-primary"></i>
+                            <span>Python 3.12+</span>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="d-flex align-items-center gap-2">
+                            <i class="bi bi-check2-circle text-primary"></i>
+                            <span>Flask Framework</span>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="d-flex align-items-center gap-2">
+                            <i class="bi bi-check2-circle text-primary"></i>
+                            <span>Scikit-learn</span>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="d-flex align-items-center gap-2">
+                            <i class="bi bi-check2-circle text-primary"></i>
+                            <span>Bootstrap 5 CSS</span>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="d-flex align-items-center gap-2">
+                            <i class="bi bi-check2-circle text-primary"></i>
+                            <span>Imbalanced-learn (SMOTE)</span>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="d-flex align-items-center gap-2">
+                            <i class="bi bi-check2-circle text-primary"></i>
+                            <span>Chart.js Integration</span>
+                        </div>
+                    </div>
+                </div>
+                <p class="mt-4 text-muted small">Designed to easily deploy as a lightweight web interface for cybersecurity analysts to test and monitor flow attributes manually.</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

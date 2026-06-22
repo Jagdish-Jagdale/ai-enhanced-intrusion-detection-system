@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AI-Enhanced Intrusion Detection</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Orbitron', sans-serif;
+            background-image: url('https://www.transparenttextures.com/patterns/dark-mosaic.png'), 
+                              linear-gradient(to right, #0f2027, #203a43, #2c5364);
+            color: #00ffcc;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        form {
+            background-color: rgba(0, 0, 0, 0.85);
+            padding: 30px 25px;
+            border-radius: 15px;
+            width: 350px;
+            box-shadow: 0 0 20px #00ffcc;
+        }
+
+        h2 {
+            text-align: center;
+            color: #00ffcc;
+            margin-bottom: 20px;
+        }
+
+        label {
+            color: #ccc;
+            font-size: 0.95em;
+        }
+
+        input[type=number], input[type=text] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0 20px 0;
+            border: none;
+            border-radius: 5px;
+            background-color: #1a1a1a;
+            color: #00ffcc;
+            outline: none;
+        }
+
+        input[type=submit] {
+            background: linear-gradient(to right, #00ffcc, #007bff);
+            color: #000;
+            padding: 10px;
+            border: none;
+            width: 100%;
+            cursor: pointer;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: 0.3s ease;
+        }
+
+        input[type=submit]:hover {
+            background: linear-gradient(to right, #00cc99, #0066cc);
+            box-shadow: 0 0 10px #00ffcc;
+        }
+
+        .prediction {
+            margin-top: 20px;
+            background-color: rgba(0, 0, 0, 0.85);
+            padding: 15px;
+            border-radius: 10px;
+            color: #00ffcc;
+            text-align: center;
+            box-shadow: 0 0 10px #00ffcc;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <h2>AI-Enhanced Intrusion Detection</h2>
+        <form method="POST" action="/predict">
+            <label for="flow_duration">Flow Duration:</label>
+            <input type="number" step="any" name="flow_duration" required>
+
+            <label for="total_fwd_packets">Total Fwd Packets:</label>
+            <input type="number" step="any" name="total_fwd_packets" required>
+
+            <label for="total_backward_packets">Total Backward Packets:</label>
+            <input type="number" step="any" name="total_backward_packets" required>
+
+            <label for="total_length_fwd_packets">Total Length of Fwd Packets:</label>
+            <input type="number" step="any" name="total_length_fwd_packets" required>
+
+            <input type="submit" value="Predict">
+        </form>
+
+        {% if prediction %}
+            <div class="prediction">
+                <h3>Prediction: {{ prediction }}</h3>
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
