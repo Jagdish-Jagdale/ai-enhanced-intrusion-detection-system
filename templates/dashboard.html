@@ -97,10 +97,10 @@
     new Chart(classCtx, {
         type: 'bar',
         data: {
-            labels: {{ class_labels|tojson }},
+            labels: {{ class_labels|tojson|safe }},
             datasets: [{
                 label: 'Scans',
-                data: {{ class_counts|tojson }},
+                data: {{ class_counts|tojson|safe }},
                 backgroundColor: [
                     '#20c997', // Normal
                     '#ff3366', // Brute Force
