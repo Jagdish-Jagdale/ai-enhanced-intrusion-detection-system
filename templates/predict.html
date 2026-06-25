@@ -13,27 +13,37 @@
         <!-- Input Form Column -->
         <div class="col-lg-7">
             <div class="card border-0 shadow-sm p-4 h-100">
-                <h5 class="fw-bold mb-4 border-bottom pb-2">Network Connection Features</h5>
+                <h5 class="fw-bold mb-4 border-bottom pb-2">Network Connection Featuresah</h5>
                 <form id="predictionForm" method="POST" action="/predict">
                     <div class="row g-3">
                         <div class="col-md-6">
-                            <label for="flow_duration" class="form-label fw-semibold text-secondary small">Duration (seconds)</label>
-                            <input type="number" step="any" class="form-control bg-light border-0" id="flow_duration" name="flow_duration" required placeholder="e.g. 76978">
+                            <label for="flow_duration" class="form-label fw-semibold text-secondary small">Duration
+                                (seconds)</label>
+                            <input type="number" step="any" class="form-control bg-light border-0" id="flow_duration"
+                                name="flow_duration" required placeholder="e.g. 76978">
                         </div>
                         <div class="col-md-6">
-                            <label for="total_length_fwd_packets" class="form-label fw-semibold text-secondary small">Source Bytes</label>
-                            <input type="number" step="any" class="form-control bg-light border-0" id="total_length_fwd_packets" name="total_length_fwd_packets" required placeholder="e.g. 78">
+                            <label for="total_length_fwd_packets"
+                                class="form-label fw-semibold text-secondary small">Source Bytes</label>
+                            <input type="number" step="any" class="form-control bg-light border-0"
+                                id="total_length_fwd_packets" name="total_length_fwd_packets" required
+                                placeholder="e.g. 78">
                         </div>
                         <div class="col-md-6">
-                            <label for="total_fwd_packets" class="form-label fw-semibold text-secondary small">Total Fwd Packets</label>
-                            <input type="number" step="any" class="form-control bg-light border-0" id="total_fwd_packets" name="total_fwd_packets" required placeholder="e.g. 2">
+                            <label for="total_fwd_packets" class="form-label fw-semibold text-secondary small">Total Fwd
+                                Packets</label>
+                            <input type="number" step="any" class="form-control bg-light border-0"
+                                id="total_fwd_packets" name="total_fwd_packets" required placeholder="e.g. 2">
                         </div>
                         <div class="col-md-6">
-                            <label for="total_backward_packets" class="form-label fw-semibold text-secondary small">Total Backward Packets</label>
-                            <input type="number" step="any" class="form-control bg-light border-0" id="total_backward_packets" name="total_backward_packets" required placeholder="e.g. 2">
+                            <label for="total_backward_packets"
+                                class="form-label fw-semibold text-secondary small">Total Backward Packets</label>
+                            <input type="number" step="any" class="form-control bg-light border-0"
+                                id="total_backward_packets" name="total_backward_packets" required placeholder="e.g. 2">
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-danger w-100 mt-4 py-2 fw-bold" style="background-color: var(--accent-pink); border: none;">
+                    <button type="submit" class="btn btn-danger w-100 mt-4 py-2 fw-bold"
+                        style="background-color: var(--accent-pink); border: none;">
                         <i class="bi bi-search me-2"></i>Analyze Traffic
                     </button>
                 </form>
@@ -42,38 +52,41 @@
 
         <!-- Output Column -->
         <div class="col-lg-5">
-            <div class="card border-0 shadow-sm p-4 text-center h-100 min-vh-25 d-flex flex-column align-items-center justify-content-center">
+            <div
+                class="card border-0 shadow-sm p-4 text-center h-100 min-vh-25 d-flex flex-column align-items-center justify-content-center">
                 {% if prediction %}
-                    <div class="w-100">
-                        <h5 class="fw-bold mb-4 text-start border-bottom pb-2">Analysis Result</h5>
-                        
-                        {% if "Normal" in prediction or "BENIGN" in prediction %}
-                            <div class="alert alert-success d-inline-block py-3 px-5 rounded-pill mb-3" role="alert">
-                                <i class="bi bi-shield-check fs-2 d-block mb-1"></i>
-                                <span class="fs-4 fw-bold">Safe Traffic</span>
-                            </div>
-                            <h4 class="fw-bold text-success mt-2">{{ prediction_display }}</h4>
-                        {% else %}
-                            <div class="alert alert-danger d-inline-block py-3 px-5 rounded-pill mb-3" role="alert">
-                                <i class="bi bi-exclamation-triangle fs-2 d-block mb-1"></i>
-                                <span class="fs-4 fw-bold">Intrusion Detected</span>
-                            </div>
-                            <h4 class="fw-bold text-danger mt-2">{{ prediction_display }}</h4>
-                        {% endif %}
+                <div class="w-100">
+                    <h5 class="fw-bold mb-4 text-start border-bottom pb-2">Analysis Result</h5>
 
-                        <div class="mt-4 p-3 bg-light rounded text-start">
-                            <div class="d-flex justify-content-between mb-2">
-                                <span class="text-secondary fw-semibold">Model confidence:</span>
-                                <span class="fw-bold text-primary">{{ confidence }}</span>
-                            </div>
-                            <div class="progress" style="height: 10px;">
-                                <div class="progress-bar {% if 'Normal' in prediction or 'BENIGN' in prediction %}bg-success{% else %}bg-danger{% endif %}" role="progressbar" style="width: {{ confidence }}"></div>
-                            </div>
+                    {% if "Normal" in prediction or "BENIGN" in prediction %}
+                    <div class="alert alert-success d-inline-block py-3 px-5 rounded-pill mb-3" role="alert">
+                        <i class="bi bi-shield-check fs-2 d-block mb-1"></i>
+                        <span class="fs-4 fw-bold">Safe Traffic</span>
+                    </div>
+                    <h4 class="fw-bold text-success mt-2">{{ prediction_display }}</h4>
+                    {% else %}
+                    <div class="alert alert-danger d-inline-block py-3 px-5 rounded-pill mb-3" role="alert">
+                        <i class="bi bi-exclamation-triangle fs-2 d-block mb-1"></i>
+                        <span class="fs-4 fw-bold">Intrusion Detected</span>
+                    </div>
+                    <h4 class="fw-bold text-danger mt-2">{{ prediction_display }}</h4>
+                    {% endif %}
+
+                    <div class="mt-4 p-3 bg-light rounded text-start">
+                        <div class="d-flex justify-content-between mb-2">
+                            <span class="text-secondary fw-semibold">Model confidence:</span>
+                            <span class="fw-bold text-primary">{{ confidence }}</span>
+                        </div>
+                        <div class="progress" style="height: 10px;">
+                            <div class="progress-bar {% if 'Normal' in prediction or 'BENIGN' in prediction %}bg-success{% else %}bg-danger{% endif %}"
+                                role="progressbar" style="width: {{ confidence }}"></div>
                         </div>
                     </div>
+                </div>
                 {% else %}
-                    <i class="bi bi-shield-shaded fs-1 text-secondary opacity-50 mb-3"></i>
-                    <p class="text-muted">Enter network features and click <strong>Analyze Traffic</strong> to get a prediction.</p>
+                <i class="bi bi-shield-shaded fs-1 text-secondary opacity-50 mb-3"></i>
+                <p class="text-muted">Enter network features and click <strong>Analyze Traffic</strong> to get a
+                    prediction.</p>
                 {% endif %}
             </div>
         </div>
