@@ -8,7 +8,7 @@ app = Flask(__name__)
 # Load the model trained with 4 features
 model = load("random_forest_model_4_features.joblib")
 
-# Prepopulate alerts with some mock data to make dashboard look realisticpg
+# Prepopulate alerts with some mock data to make dashboard look realistic
 alerts_history = [
     {
         "id": 1,
